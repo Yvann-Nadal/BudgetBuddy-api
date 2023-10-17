@@ -2,9 +2,9 @@
 - auth  -> auth
 - comptes -> accounts
 - gérer gains/dépenses -> transactions
-~ (transactions ctc btc )
 - catégorisation gains/dépenses -> categories
 - conversion monnaie -> currency
 ~ (alertes dépenses) -> alerts
 ~ (gestion des budgets) -> budgets
 ~ (dettes et interets) -> debts
+~ (transactions ctc btc )
