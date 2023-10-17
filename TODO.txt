@@ -1,0 +1,10 @@
+- user
+- auth
+- comptes
+- gérer gains/dépenses
+- transactions ctc btc
+- catégorisation gains/dépenses
+- conversion monnaie
+~ (alertes dépenses)
+~ (gestion des budgets)
+~ (dettes et interets)
