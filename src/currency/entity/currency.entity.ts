@@ -1,12 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
-
-@Entity('currency')
+@Entity("currency")
 export class CurrencyEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type: 'varchar' })
-    currencyName: string;
-
+  @Column({ type: "varchar" })
+  currencyType: string;
 }

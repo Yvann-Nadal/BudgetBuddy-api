@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CurrencyEntity } from "../entity/currency.entity";
 import { Repository } from "typeorm";
+import { CurrencyCreateDto, CurrencyUpdateDto } from "../dto/currency.dto";
 
 Injectable();
 
@@ -22,11 +23,11 @@ export class CurrencyService {
       .getOne();
   }
 
-  async createCurrency(currency: CurrencyEntity) {
+  async createCurrency(currency: CurrencyCreateDto) {
     return await this.currencyRepository.save(currency);
   }
 
-  async updateCurrency(id: number, currency: CurrencyEntity) {
+  async updateCurrency(id: number, currency: CurrencyUpdateDto) {
     const currencyUpdate = await this.currencyRepository.findOneBy({ id });
     const currencyUpdated = { ...currencyUpdate, ...currency };
     await this.currencyRepository.save(currencyUpdated);

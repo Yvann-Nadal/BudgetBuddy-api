@@ -1,6 +1,6 @@
 import { Controller, Get, Param, ParseIntPipe, Post, Body, Put, Delete } from "@nestjs/common";
 import { CurrencyService } from "../service/currency.service";
-import { CurrencyEntity } from "../entity/currency.entity";
+import { CurrencyCreateDto, CurrencyUpdateDto } from "../dto/currency.dto";
 
 @Controller("currency")
 export class CurrencyController {
@@ -17,12 +17,12 @@ export class CurrencyController {
   }
 
   @Post()
-  createCurrency(@Body() currency: CurrencyEntity) {
+  createCurrency(@Body() currency: CurrencyCreateDto) {
     return this.currencyService.createCurrency(currency);
   }
 
   @Put(":id")
-  updateCurrency(@Param("id", ParseIntPipe) id: number, @Body() currency: CurrencyEntity) {
+  updateCurrency(@Param("id", ParseIntPipe) id: number, @Body() currency: CurrencyUpdateDto) {
     return this.currencyService.updateCurrency(id, currency);
   }
 

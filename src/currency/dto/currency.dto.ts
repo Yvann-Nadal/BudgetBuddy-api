@@ -1,6 +1,11 @@
-import { IsString } from 'class-validator';
+import { IsString } from "class-validator";
 
-export class CurrencyDTO{
-    @IsString()
-    currencyName: string;
+export class CurrencyCreateDto {
+  @IsString()
+  currencyType: string;
+}
+
+export class CurrencyUpdateDto {
+  @IsString()
+  currencyType: string;
 }
