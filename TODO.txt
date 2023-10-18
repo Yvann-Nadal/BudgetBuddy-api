@@ -8,3 +8,11 @@
 ~ (gestion des budgets) -> budgets
 ~ (dettes et interets) -> debts
 ~ (transactions ctc btc )
+
+# RELATIONS
+
+user > accounts = OTM
+accounts > transactions = OTM
+categories > transactions = OTM
+currency > accounts = OTM
+currency > transactions = OTM
