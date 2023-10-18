@@ -1,9 +1,21 @@
 import { IsOptional, IsString } from "class-validator";
 
 
-export class TransactionsDTO{
+export class CategoriesCreateDTO{
     @IsString()
     categoryName: string;
     @IsString()
-    currencyDescription: string;
+    categoryDescription: string;
+}
+
+export class CategoriesUpdateDTO{
+    @IsOptional()
+    @IsString()
+    id: number;
+    @IsOptional()
+    @IsString()
+    categoryName: string;
+    @IsOptional()
+    @IsString()
+    categoryDescription: string;
 }

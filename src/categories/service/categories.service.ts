@@ -2,6 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CategoriesEntity } from "../entity/categories.entity";
 import { Repository } from "typeorm";
+import { Update } from "aws-sdk/clients/dynamodb";
+import { CategoriesCreateDTO,CategoriesUpdateDTO } from "../dto/categories.dto";
 
 
 Injectable();
@@ -22,8 +24,21 @@ export class CategoriesService {
         .getOne();
     }
 
-    async createCategorie(categorie: CategoriesEntity) {
+    async createCategorie(categorie: CategoriesCreateDTO) {
         return await this.categoriesRepository.save(categorie);
+    }
+
+    async updateCategorie(id: number, categorie: CategoriesUpdateDTO) {
+        const categories = await this.categoriesRepository.findOneBy({ id });
+
+        const categoriesUpdate = { ...categories, ...categorie };
+        await this.categoriesRepository.save(categoriesUpdate);
+
+        return categoriesUpdate;
+    }
+
+    async deleteCategorie(id: number) {
+        return await this.categoriesRepository.delete(id);
     }
 
 }
