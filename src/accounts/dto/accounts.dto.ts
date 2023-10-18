@@ -1,4 +1,5 @@
 import { IsNumber, IsOptional, IsString } from "class-validator";
+import { CurrencyEntity } from "src/currency/entity/currency.entity";
 import {
   TransactionsCreateDTO,
   TransactionsUpdateDTO
@@ -14,6 +15,8 @@ export class AccountsCreateDTO {
   transactions: TransactionsCreateDTO[];
   @IsOptional()
   user_id: UsersEntity;
+  @IsOptional()
+  currency_id: CurrencyEntity;
 }
 
 export class AccountsUpdateDTO {
@@ -30,4 +33,6 @@ export class AccountsUpdateDTO {
   transactions: TransactionsUpdateDTO[];
   @IsOptional()
   user_id: UsersEntity;
+  @IsOptional()
+  currency_id: CurrencyEntity;
 }

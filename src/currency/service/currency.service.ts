@@ -13,12 +13,12 @@ export class CurrencyService {
   ) {}
 
   async getAllCurrency() {
-    return await this.currencyRepository.find();
+    return await this.currencyRepository.find({relations : ['accounts']});
   }
 
   async getOneCurrencyById(id: number) {
-    return await this.currencyRepository
-      .createQueryBuilder("currency")
+    return await this.currencyRepository.createQueryBuilder("currency")
+      .leftJoinAndSelect("currency.accounts", "accounts")
       .where("currency.id = :id", { id })
       .getOne();
   }
