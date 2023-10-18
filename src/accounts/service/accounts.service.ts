@@ -18,6 +18,8 @@ export class AccountsService {
 
     async getOneAccountById(id: number) {
         return await this.accountsRepository.createQueryBuilder('account')
+        .leftJoinAndSelect('account.user_id', 'user')
+        .leftJoinAndSelect('account.transactions', 'transactions')
         .where('account.id = :id', { id })
         .getOne();
     }

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { AccountEntity } from "src/accounts/entity/accounts.entity";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 
 @Entity("transactions")
 export class TransactionsEntity {
@@ -13,4 +14,9 @@ export class TransactionsEntity {
 
   @Column({ type: "varchar" })
   transactionDescription: string;
-}
+
+  @ManyToOne(()=> AccountEntity, account => account.transactions,{
+    cascade:['insert','update']
+    })
+  account_id: AccountEntity;
+  }

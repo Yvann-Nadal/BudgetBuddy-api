@@ -17,8 +17,8 @@ export class UsersService {
   }
 
   async getOneUserById(id: number) {
-    return await this.userRepository
-      .createQueryBuilder("user")
+    return await this.userRepository.createQueryBuilder("user")
+    .leftJoinAndSelect("user.accounts", "accounts")
       .where("user.id = :id", { id })
       .getOne();
   }
