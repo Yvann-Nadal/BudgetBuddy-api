@@ -1,5 +1,6 @@
 import { AccountEntity } from "src/accounts/entity/accounts.entity";
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { CategoriesEntity } from "src/categories/entity/categories.entity";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
 
 @Entity("transactions")
 export class TransactionsEntity {
@@ -15,8 +16,13 @@ export class TransactionsEntity {
   @Column({ type: "varchar" })
   transactionDescription: string;
 
-  @ManyToOne(()=> AccountEntity, account => account.transactions,{
-    cascade:['insert','update']
-    })
+  @ManyToOne(() => AccountEntity, account => account.transactions, {
+    cascade: ["insert", "update"]
+  })
   account_id: AccountEntity;
-  }
+
+  @ManyToOne(() => CategoriesEntity, categories => categories.transactions, {
+    cascade: ["insert", "update"]
+  })
+  categories_id: CategoriesEntity;
+}
