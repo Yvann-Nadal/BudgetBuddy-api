@@ -1,30 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { AccountsDto } from '../dto/accounts.dto';
+import { Account } from '../entity/accounts.entity';
 
 @Injectable()
 export class AccountsService {
-    private accounts: AccountsDto[] = [];
+    private accounts: Account[] = [];
 
-    create(account: AccountsDto): AccountsDto {
+    create(account: Account): Account {
         this.accounts.push(account);
         return account;
     }
 
-    findAll(): AccountsDto[] {
+    findAll(): Account[] {
         return this.accounts;
     }
 
-    findOne(id: string): AccountsDto {
+    findOne(id: number): Account {
         return this.accounts.find(account => account.id === id);
     }
 
-    update(id: string, account: AccountsDto): AccountsDto {
+    update(id: number, account: Account): Account {
         const index = this.accounts.findIndex(account => account.id === id);
         this.accounts[index] = account;
         return account;
     }
 
-    delete(id: string): void {
+    delete(id: number): void {
         this.accounts = this.accounts.filter(account => account.id !== id);
     }
 }
