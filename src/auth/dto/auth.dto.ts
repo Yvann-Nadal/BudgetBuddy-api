@@ -1,10 +1,10 @@
-import { IsString } from 'class-validator';
+import { IsString } from "class-validator";
 
-export class AuthDTO{
-    @IsString()
-    username: string;
-    @IsString()
-    password: string;
-    @IsString()
-    email: string;
+export class AuthDTO {
+  @IsString()
+  username: string;
+  @IsString()
+  password: string;
+  @IsString()
+  email: string;
 }
