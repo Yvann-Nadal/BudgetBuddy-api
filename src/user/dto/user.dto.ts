@@ -1,7 +1,7 @@
 import { IsOptional, IsString } from "class-validator";
 
 
-export class UserCreateDTO{
+export class UsersCreateDTO{
     @IsString()
     username: string;
     @IsString()
@@ -10,7 +10,7 @@ export class UserCreateDTO{
     email: string;
 }
 
-export class UserUpdateDTO{
+export class UsersUpdateDTO{
     @IsOptional()
     @IsString()
     id: number;
