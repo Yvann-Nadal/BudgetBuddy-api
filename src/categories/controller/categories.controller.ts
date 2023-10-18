@@ -1,6 +1,7 @@
-import { Controller, Get, Param, ParseIntPipe, Post, Body } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Post, Body, Put, Delete } from "@nestjs/common";
 import { CategoriesService } from "../service/categories.service";
 import { CategoriesEntity } from "../entity/categories.entity";
+import { CategoriesCreateDTO, CategoriesUpdateDTO } from "../dto/categories.dto";
 
 @Controller("categories")
 export class CategoriesController {
@@ -17,7 +18,17 @@ export class CategoriesController {
   }
 
   @Post()
-  createCategorie(@Body() categorie: CategoriesEntity) {
+  createCategorie(@Body() categorie: CategoriesCreateDTO) {
     return this.categoriesService.createCategorie(categorie);
+  }
+
+  @Put(":id")
+  updateCategorie(@Param("id", ParseIntPipe) id: number, @Body() categorie: CategoriesUpdateDTO) {
+    return this.categoriesService.updateCategorie(id, categorie);
+  }
+
+  @Delete(":id")
+  deleteCategorie(@Param("id", ParseIntPipe) id: number) {
+    return this.categoriesService.deleteCategorie(id);
   }
 }

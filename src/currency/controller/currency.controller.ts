@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, Post, Body, Put } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Post, Body, Put, Delete } from "@nestjs/common";
 import { CurrencyService } from "../service/currency.service";
 import { CurrencyEntity } from "../entity/currency.entity";
 

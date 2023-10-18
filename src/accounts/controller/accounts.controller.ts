@@ -1,33 +1,35 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { AccountsService } from '../service/accounts.service';
-import { Account } from '../entity/accounts.entity';
+import { AccountsCreateDTO, AccountsUpdateDTO } from '../dto/accounts.dto';
 
 @Controller('accounts')
 export class AccountsController {
     constructor(private readonly accountsService: AccountsService) {}
 
     @Get()
-    async findAll(): Promise<Account[]> {
-        return this.accountsService.findAll();
+    getAllAccounts() {
+        return this.accountsService.getAllAccounts();
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: number): Promise<Account> {
-        return this.accountsService.findOne(id);
+    getOneAccountById(@Param('id') id: number) {
+        return this.accountsService.getOneAccountById(id);
     }
 
     @Post()
-    async create(@Body() account: Account): Promise<Account> {
-        return this.accountsService.create(account);
+    createAccount(@Body() account: AccountsCreateDTO) {
+        return this.accountsService.createAccount(account);
     }
 
     @Put(':id')
-    async update(@Param('id') id: number, @Body() account: Account): Promise<Account> {
-        return this.accountsService.update(id, account);
+    updateAccount(@Param('id') id: number, @Body() account: AccountsUpdateDTO) {
+        return this.accountsService.updateAccount(id, account);
     }
 
     @Delete(':id')
-    async delete(@Param('id') id: number): Promise<void> {
-        return this.accountsService.delete(id);
+    deleteAccount(@Param('id') id: number) {
+        return this.accountsService.deleteAccount(id);
     }
+
+   
 }

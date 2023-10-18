@@ -1,30 +1,47 @@
 import { Injectable } from '@nestjs/common';
-import { Account } from '../entity/accounts.entity';
+import { AccountEntity } from '../entity/accounts.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Account } from 'aws-sdk';
+import { Repository } from 'typeorm';
+import { AccountsCreateDTO, AccountsUpdateDTO } from '../dto/accounts.dto';
 
 @Injectable()
 export class AccountsService {
-    private accounts: Account[] = [];
-
-    create(account: Account): Account {
-        this.accounts.push(account);
-        return account;
+    constructor(
+        @InjectRepository(AccountEntity)
+        private readonly accountsRepository: Repository<AccountEntity>,
+    ) {}
+    
+    async getAllAccounts() {
+        return await this.accountsRepository.find();
     }
 
-    findAll(): Account[] {
-        return this.accounts;
+    async getOneAccountById(id: number) {
+        return await this.accountsRepository.createQueryBuilder('account')
+        .where('account.id = :id', { id })
+        .getOne();
     }
 
-    findOne(id: number): Account {
-        return this.accounts.find(account => account.id === id);
+    async createAccount(data: AccountsCreateDTO) {
+        try {
+            return this.accountsRepository.save(data);
+        } catch (error) {
+            console.log(error);
+            throw new Error('Error while creating account');
+        }
     }
 
-    update(id: number, account: Account): Account {
-        const index = this.accounts.findIndex(account => account.id === id);
-        this.accounts[index] = account;
-        return account;
+    async updateAccount(id: number, account: AccountsUpdateDTO) {
+        const accounts = await this.accountsRepository.findOneBy({ id });
+
+        const accountsUpdate = { ...accounts, ...account };
+        await this.accountsRepository.save(accountsUpdate);
+
+        return accountsUpdate;
     }
 
-    delete(id: number): void {
-        this.accounts = this.accounts.filter(account => account.id !== id);
+    async deleteAccount(id: number) {
+        return await this.accountsRepository.delete(id);
     }
+  
 }
