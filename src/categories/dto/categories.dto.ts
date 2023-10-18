@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CategoriesCreateDTO {
   @IsString()
@@ -9,7 +9,7 @@ export class CategoriesCreateDTO {
 
 export class CategoriesUpdateDTO {
   @IsOptional()
-  @IsString()
+  @IsNumber()
   id: number;
   @IsOptional()
   @IsString()

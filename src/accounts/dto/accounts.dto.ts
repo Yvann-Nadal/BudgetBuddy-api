@@ -11,12 +11,12 @@ export class AccountsCreateDTO{
 
 export class AccountsUpdateDTO{
     @IsOptional()
-    @IsString()
+    @IsNumber()
     id: number;
     @IsOptional()
     @IsString()
     name: string;
     @IsOptional()
-    @IsString()
+    @IsNumber()
     balance: number;
 }

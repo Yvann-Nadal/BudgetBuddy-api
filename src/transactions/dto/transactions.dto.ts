@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 
 export class TransactionsCreateDTO{
@@ -10,7 +10,7 @@ export class TransactionsCreateDTO{
 
 export class TransactionsUpdateDTO{
     @IsOptional()
-    @IsString()
+    @IsNumber()
     id: number;
     @IsOptional()
     @IsString()
