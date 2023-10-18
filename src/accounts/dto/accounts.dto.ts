@@ -1,11 +1,11 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 
 
 export class AccountsCreateDTO{
     @IsString()
     name: string;
-    @IsString()
+    @IsNumber()
     balance: number;
 }
 
