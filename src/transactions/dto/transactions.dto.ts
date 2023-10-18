@@ -1,4 +1,5 @@
 import { IsNumber, IsOptional, IsString } from "class-validator";
+import { AccountEntity } from "src/accounts/entity/accounts.entity";
 
 export class TransactionsCreateDTO {
   @IsString()
@@ -7,6 +8,8 @@ export class TransactionsCreateDTO {
   transactionAmount: number;
   @IsString()
   transactionDescription: string;
+  @IsOptional()
+  account_id: AccountEntity;
 }
 
 export class TransactionsUpdateDTO {
@@ -22,4 +25,6 @@ export class TransactionsUpdateDTO {
   @IsOptional()
   @IsString()
   transactionDescription: string;
+  @IsOptional()
+  account_id: AccountEntity;
 }

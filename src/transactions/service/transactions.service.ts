@@ -14,7 +14,7 @@ export class TransactionsService {
     ) {}
 
     async getAllTransactions() {
-        return await this.transactionsRepository.find();
+        return await this.transactionsRepository.find({relations: ['account_id']});
     }
 
     async getOneTransactionById(id: number) {

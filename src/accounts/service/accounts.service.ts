@@ -13,7 +13,7 @@ export class AccountsService {
     ) {}
     
     async getAllAccounts() {
-        return await this.accountsRepository.find();
+        return await this.accountsRepository.find({relations: ['user_id', 'transactions']});
     }
 
     async getOneAccountById(id: number) {

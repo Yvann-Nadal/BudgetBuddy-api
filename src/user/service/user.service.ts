@@ -13,7 +13,7 @@ export class UsersService {
   ) {}
 
   async getAllUsers() {
-    return await this.userRepository.find();
+    return await this.userRepository.find({relations: ["accounts"]});
   }
 
   async getOneUserById(id: number) {
