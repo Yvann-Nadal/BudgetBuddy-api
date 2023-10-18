@@ -1,4 +1,5 @@
 import { IsNumber, IsOptional, IsString } from "class-validator";
+import { TransactionsCreateDTO, TransactionsUpdateDTO } from "src/transactions/dto/transactions.dto";
 
 
 
@@ -7,6 +8,8 @@ export class AccountsCreateDTO{
     name: string;
     @IsNumber()
     balance: number;
+    @IsOptional()
+    transactions: TransactionsCreateDTO[];
 }
 
 export class AccountsUpdateDTO{
@@ -19,4 +22,6 @@ export class AccountsUpdateDTO{
     @IsOptional()
     @IsNumber()
     balance: number;
+    @IsOptional()
+    transactions: TransactionsUpdateDTO[];
 }
