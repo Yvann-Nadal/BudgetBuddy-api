@@ -14,12 +14,13 @@ export class TransactionsService {
     ) {}
 
     async getAllTransactions() {
-        return await this.transactionsRepository.find({relations: ['account_id']});
+        return await this.transactionsRepository.find({relations: ['account_id', 'currency_id']});
     }
 
     async getOneTransactionById(id: number) {
         return await this.transactionsRepository.createQueryBuilder('transactions')
         .leftJoinAndSelect('transactions.account_id', 'account')
+        .leftJoinAndSelect('transactions.currency_id', 'currency')
         .where('transactions.id = :id', { id })
         .getOne();
     }
