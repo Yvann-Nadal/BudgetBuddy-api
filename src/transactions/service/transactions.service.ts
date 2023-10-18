@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { TransactionsEntity } from "../entity/transactions.entity";
 import { Repository } from "typeorm";
+import { TransactionsCreateDTO, TransactionsUpdateDTO } from "../dto/transactions.dto";
 
 
 Injectable();
@@ -22,8 +23,21 @@ export class TransactionsService {
         .getOne();
     }
 
-    async createTransaction(transaction: TransactionsEntity) {
+    async createTransaction(transaction: TransactionsCreateDTO) {
         return await this.transactionsRepository.save(transaction);
     }
+
+    async updateTransaction(id: number, transaction: TransactionsUpdateDTO) {
+        const transactions = await this.transactionsRepository.findOneBy({ id });
+
+        const transactionsUpdate = { ...transactions, ...transaction };
+        await this.transactionsRepository.save(transactionsUpdate);
+
+        return transactionsUpdate;
+    }
+
+    async deleteTransaction(id: number) {
+        return await this.transactionsRepository.delete(id);
+    }  
 
 }

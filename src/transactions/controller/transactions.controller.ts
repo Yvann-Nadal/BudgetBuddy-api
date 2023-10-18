@@ -5,9 +5,11 @@ import {
     ParseIntPipe,
     Post,
     Body,
+    Put,
+    Delete,
   } from '@nestjs/common';
 import { TransactionsService } from '../service/transactions.service';
-import { TransactionsEntity } from '../entity/transactions.entity';
+import { TransactionsCreateDTO, TransactionsUpdateDTO } from '../dto/transactions.dto';
 
 @Controller('transactions')
     export class TransactionsController {
@@ -25,7 +27,21 @@ import { TransactionsEntity } from '../entity/transactions.entity';
             }
 
         @Post()
-        createTransaction(@Body() transaction: TransactionsEntity) {
+        createTransaction(@Body() transaction: TransactionsCreateDTO) {
             return this.transactionsService.createTransaction(transaction);
         }
+
+        @Put(':id')
+        updateTransaction(
+            @Param('id', ParseIntPipe) id: number,
+            @Body() transaction: TransactionsUpdateDTO,
+            ) {
+            return this.transactionsService.updateTransaction(id, transaction);
+            }
+
+        @Delete(':id')
+        deleteTransaction(@Param('id', ParseIntPipe) id: number) {
+            return this.transactionsService.deleteTransaction(id);
+        }
+
     }
