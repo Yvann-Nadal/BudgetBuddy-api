@@ -9,7 +9,6 @@ import {
     Delete,
   } from '@nestjs/common';
 import { UsersService } from '../service/user.service';
-import { UsersEntity } from '../entity/user.entity';
 import { UsersCreateDTO, UsersUpdateDTO } from '../dto/user.dto';
 
 
