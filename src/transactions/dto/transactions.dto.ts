@@ -1,6 +1,7 @@
 import { IsNumber, IsOptional, IsString } from "class-validator";
 import { AccountEntity } from "src/accounts/entity/accounts.entity";
 import { CategoriesCreateDTO, CategoriesUpdateDTO } from "src/categories/dto/categories.dto";
+import { CurrencyEntity } from "src/currency/entity/currency.entity";
 
 export class TransactionsCreateDTO {
   @IsString()
@@ -13,6 +14,8 @@ export class TransactionsCreateDTO {
   categories: CategoriesCreateDTO[];
   @IsOptional()
   account_id: AccountEntity;
+  @IsOptional()
+  currency_id: CurrencyEntity;
 }
 
 export class TransactionsUpdateDTO {
@@ -32,4 +35,6 @@ export class TransactionsUpdateDTO {
   categories: CategoriesUpdateDTO[];
   @IsOptional()
   account_id: AccountEntity;
+  @IsOptional()
+  currency_id: CurrencyEntity;
 }

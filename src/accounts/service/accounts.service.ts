@@ -12,7 +12,9 @@ export class AccountsService {
   ) {}
 
   async getAllAccounts() {
-    return await this.accountsRepository.find({ relations: ["user_id", "transactions"] });
+    return await this.accountsRepository.find({
+      relations: ["user_id", "transactions", "currency_id"]
+    });
   }
 
   async getOneAccountById(id: number) {
@@ -20,6 +22,7 @@ export class AccountsService {
       .createQueryBuilder("account")
       .leftJoinAndSelect("account.user_id", "user")
       .leftJoinAndSelect("account.transactions", "transactions")
+      .leftJoinAndSelect("account.currency_id", "currency")
       .where("account.id = :id", { id })
       .getOne();
   }
