@@ -10,6 +10,8 @@ import { CurrencyModule } from "./currency/currency.module";
 import { TransactionsModule } from "./transactions/transactions.module";
 import { AuthModule } from "./auth/auth.module";
 import { JWTGuard } from "./auth/guard/jwt.guard";
+import { HttpModule } from "@nestjs/axios";
+import { ConverterModule } from "./converter/converter.module";
 
 
 @Module({
@@ -32,6 +34,7 @@ import { JWTGuard } from "./auth/guard/jwt.guard";
     CurrencyModule,
     TransactionsModule,
     AuthModule,
+    ConverterModule
   ],
   controllers: [AppController],
   providers: [AppService, JWTGuard],
