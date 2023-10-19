@@ -1,26 +1,35 @@
 import {
-    Controller,
-    Get,
-    Param,
-    ParseIntPipe,
-  } from '@nestjs/common';
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '../guard/auth.guard';
 import { AuthService } from '../service/auth.service';
-
-
-
+import { Public } from '../decorator/public.decorator';
 @Controller('auth')
-    export class AuthController {
+export class AuthController {
+  constructor(private authService: AuthService) {}
 
-        constructor(private readonly authService: AuthService) {}
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  @Post('login')
+  signIn(@Body() signIn : Record<string, any>) {
+    return this.authService.signIn(signIn.username, signIn.password);
+  }
 
-    @Get()
-    getAllAuth() {
-        return this.authService.getAllAuths();
-    }
-
-    @Get(':id')
-    getOneUserById(@Param('id', ParseIntPipe) id: number) {
-      return this.authService.getOneAuthById(id);
-    }
-
-    }
+  @UseGuards(AuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
+  @Public()
+@Get()
+findAll() {
+  return [];
+}
+}

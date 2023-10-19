@@ -1,25 +1,25 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { AuthEntity } from '../entity/auth.entity';
-import { Repository } from 'typeorm';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UsersService } from 'src/user/service/user.service';
+import { JwtConstants } from '../constantes';
 
-
-Injectable();
-
+@Injectable()
 export class AuthService {
-    constructor(
-        @InjectRepository(AuthEntity)
-        private readonly authRepository: Repository<AuthEntity>,
-    ) {}
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService
+  ) {}
 
-    async getAllAuths() {
-        return await this.authRepository.find();
+  async signIn(username, password ) {
+    const user = await this.usersService.findOne(username);
+    if (user?.password !== password) {
+      throw new UnauthorizedException();
     }
-
-    async getOneAuthById(id: number) {
-        return await this.authRepository.createQueryBuilder('auth')
-        .where('auth.id = :id', { id })
-        .getOne();
-    }
-
+    
+    const payload = { username: user.username, sub: user.id };
+    
+    return {
+      access_token: await this.jwtService.signAsync(payload, { secret: JwtConstants.secret}),
+    };
+  }
 }

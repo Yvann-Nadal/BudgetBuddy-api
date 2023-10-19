@@ -4,6 +4,7 @@ import { TransactionsController } from "./controller/transactions.controller";
 import { TransactionsService } from "./service/transactions.service";
 import { TransactionsEntity } from "./entity/transactions.entity";
 import { AccountEntity } from "src/accounts/entity/accounts.entity";
+import { JwtService } from "@nestjs/jwt";
 
 
 

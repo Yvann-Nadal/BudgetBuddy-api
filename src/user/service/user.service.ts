@@ -16,6 +16,10 @@ export class UsersService {
     return await this.userRepository.find({relations: ["accounts"]});
   }
 
+  async findOne(username: string) {
+    return await this.userRepository.findOneBy({ username });
+  }
+
   async getOneUserById(id: number) {
     return await this.userRepository.createQueryBuilder("user")
     .leftJoinAndSelect("user.accounts", "accounts")

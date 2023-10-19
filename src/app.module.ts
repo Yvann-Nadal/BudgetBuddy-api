@@ -8,6 +8,8 @@ import { AccountsModule } from "./accounts/accounts.module";
 import { CategorieModule } from "./categories/categories.module";
 import { CurrencyModule } from "./currency/currency.module";
 import { TransactionsModule } from "./transactions/transactions.module";
+import { AuthModule } from "./auth/auth.module";
+import { JWTGuard } from "./auth/guard/jwt.guard";
 
 
 @Module({
@@ -24,13 +26,14 @@ import { TransactionsModule } from "./transactions/transactions.module";
       synchronize: true,
       autoLoadEntities: true,
     }),
-    UserModule,
     AccountsModule,
+    UserModule,
     CategorieModule,
     CurrencyModule,
     TransactionsModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JWTGuard],
 })
 export class AppModule {}
