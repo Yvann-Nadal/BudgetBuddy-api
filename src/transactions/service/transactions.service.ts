@@ -33,8 +33,6 @@ export class TransactionsService {
 
   async createTransaction(transaction: TransactionsCreateDTO) {
 
-    
-        // Créez la nouvelle transaction
         const newTransaction = await this.transactionsRepository.create(transaction);
         await this.transactionsRepository.save(newTransaction);
     
@@ -65,9 +63,6 @@ export class TransactionsService {
         const NewTransactionAmount = transaction.transactionAmount;
         const GainOrSpend = transactions.isGain;
 
-        console.log('OldAmount:', OldAmount);
-        console.log('GainOrSpend:', GainOrSpend);
-        console.log('NewTransactionAmount:', NewTransactionAmount);
 
 
         if(GainOrSpend === true) {
