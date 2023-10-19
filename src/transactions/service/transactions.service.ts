@@ -4,6 +4,8 @@ import { TransactionsEntity } from "../entity/transactions.entity";
 import { Repository } from "typeorm";
 import { TransactionsCreateDTO, TransactionsUpdateDTO } from "../dto/transactions.dto";
 import { AccountEntity } from "src/accounts/entity/accounts.entity";
+import { HttpService } from "@nestjs/axios";
+import { AxiosResponse } from "axios";
 
 Injectable();
 
@@ -12,7 +14,8 @@ export class TransactionsService {
     @InjectRepository(TransactionsEntity)
     private readonly transactionsRepository: Repository<TransactionsEntity>,
     @InjectRepository(AccountEntity)
-    private readonly accountsRepository: Repository<AccountEntity>
+    private readonly accountsRepository: Repository<AccountEntity>,
+    private readonly httpService: HttpService
   ) {}
 
   async getAllTransactions() {
@@ -30,27 +33,54 @@ export class TransactionsService {
       .where("transactions.id = :id", { id })
       .getOne();
   }
-
+  
+ 
   async createTransaction(transaction: TransactionsCreateDTO) {
+    const newTransaction = await this.transactionsRepository.create(transaction);
+    await this.transactionsRepository.save(newTransaction);
+    const account = await this.accountsRepository.findOneBy(transaction.account_id);
 
-        const newTransaction = await this.transactionsRepository.create(transaction);
-        await this.transactionsRepository.save(newTransaction);
-    
-        const account = await this.accountsRepository.findOneBy(transaction.account_id);
+    const apiUrl = 'https://cdn.taux.live/api/ecb.json';
+    const response: AxiosResponse = await this.httpService.get(apiUrl).toPromise();
+    const converter = response.data.rates;
 
+    // Comparer la clé JSON avec transaction.currency_id.currencyType
+    if (converter[transaction.currency_id.currencyType]) {
+     
+      const currencyRate = converter[transaction.currency_id.currencyType];
+      console.log(`Taux de change pour ${transaction.currency_id.currencyType}: ${currencyRate}`);
+    } else {
+      console.log(`Clé ${transaction.currency_id.currencyType} introuvable dans la réponse JSON.`);
+    }
     
-        if (transaction.isGain) {
-            account.balance += transaction.transactionAmount;
-        } else {
-            account.balance -= transaction.transactionAmount;
+    const currencyRate = converter[transaction.currency_id.currencyType];
+    const accountRate = converter[transaction.account_id.currency_id.currencyType];
+    const converterRate = currencyRate / accountRate;
+    const transactionAmount = transaction.transactionAmount * converterRate;
+    const OldAmount = account.balance;
+    const GainOrSpend = transaction.isGain;
+    if(GainOrSpend === true) {
+        const NewAmount = OldAmount + transactionAmount;
+        const accountUpdate = { balance: NewAmount };
+        const accountUpdated = { ...account, ...accountUpdate };
+        await this.accountsRepository.save(accountUpdated);
         }
-    
-        await this.accountsRepository.save(account);
+    else {
+        const NewAmount = OldAmount - transactionAmount;
+        const accountUpdate = { balance: NewAmount };
+        const accountUpdated = { ...account, ...accountUpdate };
+        await this.accountsRepository.save(accountUpdated);
+    }
+
+    await this.transactionsRepository
+    .createQueryBuilder()
+    .update(TransactionsEntity)
+    .set({transactionAmount: transactionAmount})
+    .where("id = :id", { id : newTransaction.id })
+    .execute();
 
 
-        return newTransaction;
-    
-    
+    return newTransaction;
   }
 
   async updateTransaction(id: number, transaction: TransactionsUpdateDTO) {

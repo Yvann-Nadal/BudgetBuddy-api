@@ -34,4 +34,6 @@ export class TransactionsEntity {
     cascade: ["insert", "update"]
   })
   currency_id: CurrencyEntity;
+
+  
 }

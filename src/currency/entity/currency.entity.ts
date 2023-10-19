@@ -7,8 +7,8 @@ export class CurrencyEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "varchar" })
-  currencyType: string;
+  @Column({ enum: ['USD', 'JPY','BGN','CZK','DKK','GBP'] } )
+  currencyType:  'USD'| 'JPY'|'BGN'|'CZK'|'DKK'|'GBP';
 
   @OneToMany(()=> AccountEntity, account => account.currency_id)
   accounts: AccountEntity[];

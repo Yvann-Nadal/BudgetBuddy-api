@@ -8,7 +8,7 @@ export class ConverterService {
   constructor(private readonly httpService: HttpService) {}
 
   fetchDataFromExternalApi(): Observable<AxiosResponse<any>> {
-    const apiUrl = 'https://cdn.taux.live/api/latest.json';
+    const apiUrl = 'https://cdn.taux.live/api/ecb.json';
     return this.httpService.get(apiUrl);
   }
 }
