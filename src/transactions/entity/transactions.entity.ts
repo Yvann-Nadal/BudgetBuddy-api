@@ -17,6 +17,9 @@ export class TransactionsEntity {
   @Column({ type: "varchar" })
   transactionDescription: string;
 
+  @Column({ type: "boolean" })
+  isGain: boolean = false;
+
   @ManyToOne(() => AccountEntity, account => account.transactions, {
     cascade: ["insert", "update"]
   })
