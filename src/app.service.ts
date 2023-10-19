@@ -13,7 +13,7 @@ export class AppService {
   }
 
   constructor(@Inject(CASHIFY) private cashify: Cashify) {
-    const result2 = this.cashify.convert(10, { from: "EUR", to: "USD" });
+    const result2 = this.cashify.convert(10, { from: "EUR", to: "JPY" });
     console.log(result2, "test");
   }
 }

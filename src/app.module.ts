@@ -13,7 +13,8 @@ import { CashifyModule } from "nestjs-cashify";
 const rates = {
   GBP: 0.87,
   EUR: 1.0,
-  USD: 1.05
+  USD: 1.05,
+  JPY: 157.0
 };
 
 @Module({
