@@ -1,4 +1,5 @@
 import { IsNumber, IsOptional, IsString } from "class-validator";
+import { AccountsCreateDTO, AccountsUpdateDTO } from "src/accounts/dto/accounts.dto";
 
 
 export class UsersCreateDTO{
@@ -8,6 +9,8 @@ export class UsersCreateDTO{
     password: string;
     @IsString()
     email: string;
+    @IsOptional()
+    accounts: AccountsCreateDTO[];
 }
 
 export class UsersUpdateDTO{
@@ -23,4 +26,6 @@ export class UsersUpdateDTO{
     @IsOptional()
     @IsString()
     password: string;
+    @IsOptional()
+    accounts: AccountsUpdateDTO[];
 }

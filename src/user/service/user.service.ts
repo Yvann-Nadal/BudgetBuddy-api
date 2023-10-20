@@ -13,12 +13,16 @@ export class UsersService {
   ) {}
 
   async getAllUsers() {
-    return await this.userRepository.find();
+    return await this.userRepository.find({relations: ["accounts"]});
+  }
+
+  async findOneByUsername(username: UsersEntity['username']) {
+    return await this.userRepository.findOneBy({ username });
   }
 
   async getOneUserById(id: number) {
-    return await this.userRepository
-      .createQueryBuilder("user")
+    return await this.userRepository.createQueryBuilder("user")
+    .leftJoinAndSelect("user.accounts", "accounts")
       .where("user.id = :id", { id })
       .getOne();
   }

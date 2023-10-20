@@ -1,8 +1,14 @@
-import { IsNumber, IsOptional, IsString } from "class-validator";
+import { IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
+import { AccountsCreateDTO, AccountsUpdateDTO } from "src/accounts/dto/accounts.dto";
+import { TransactionsCreateDTO, TransactionsUpdateDTO } from "src/transactions/dto/transactions.dto";
 
 export class CurrencyCreateDto {
-  @IsString()
-  currencyType: string;
+  @IsEnum(['USD', 'JPY','BGN','CZK','DKK','GBP'])
+  currencyType:  'USD'| 'JPY'|'BGN'|'CZK'|'DKK'|'GBP';
+  @IsOptional()
+  accounts: AccountsCreateDTO[];
+  @IsOptional()
+  transactions: TransactionsCreateDTO[];
 }
 
 export class CurrencyUpdateDto {
@@ -10,6 +16,10 @@ export class CurrencyUpdateDto {
   @IsNumber()
   id: number;
   @IsOptional()
-  @IsString()
-  currencyType: string;
+  @IsEnum(['USD', 'JPY','BGN','CZK','DKK','GBP'])
+  currencyType:  'USD'| 'JPY'|'BGN'|'CZK'|'DKK'|'GBP';
+  @IsOptional()
+  accounts: AccountsUpdateDTO[];
+  @IsOptional()
+  transactions: TransactionsUpdateDTO[];
 }

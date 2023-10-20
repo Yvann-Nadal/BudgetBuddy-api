@@ -1,4 +1,7 @@
-import { IsNumber, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsNumber, IsOptional, IsString } from "class-validator";
+import { AccountEntity } from "src/accounts/entity/accounts.entity";
+import { CategoriesCreateDTO, CategoriesUpdateDTO } from "src/categories/dto/categories.dto";
+import { CurrencyEntity } from "src/currency/entity/currency.entity";
 
 export class TransactionsCreateDTO {
   @IsString()
@@ -7,6 +10,14 @@ export class TransactionsCreateDTO {
   transactionAmount: number;
   @IsString()
   transactionDescription: string;
+  @IsOptional()
+  categories: CategoriesCreateDTO[];
+  @IsOptional()
+  account_id: AccountEntity;
+  @IsOptional()
+  currency_id: CurrencyEntity;
+  @IsBoolean()
+  isGain: boolean = false;
 }
 
 export class TransactionsUpdateDTO {
@@ -22,4 +33,13 @@ export class TransactionsUpdateDTO {
   @IsOptional()
   @IsString()
   transactionDescription: string;
+  @IsOptional()
+  categories: CategoriesUpdateDTO[];
+  @IsOptional()
+  account_id: AccountEntity;
+  @IsOptional()
+  currency_id: CurrencyEntity;
+  @IsOptional()
+  @IsBoolean()
+  isGain: boolean = false;
 }

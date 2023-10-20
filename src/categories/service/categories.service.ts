@@ -3,42 +3,42 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { CategoriesEntity } from "../entity/categories.entity";
 import { Repository } from "typeorm";
 import { Update } from "aws-sdk/clients/dynamodb";
-import { CategoriesCreateDTO,CategoriesUpdateDTO } from "../dto/categories.dto";
-
+import { CategoriesCreateDTO, CategoriesUpdateDTO } from "../dto/categories.dto";
 
 Injectable();
 
 export class CategoriesService {
-    constructor(
-        @InjectRepository(CategoriesEntity)
-        private readonly categoriesRepository: Repository<CategoriesEntity>,
-    ) {}
+  constructor(
+    @InjectRepository(CategoriesEntity)
+    private readonly categoriesRepository: Repository<CategoriesEntity>
+  ) {}
 
-    async getAllCategories() {
-        return await this.categoriesRepository.find();
-    }
+  async getAllCategories() {
+    return await this.categoriesRepository.find({ relations: ["transactions"] });
+  }
 
-    async getOneCategorieById(id: number) {
-        return await this.categoriesRepository.createQueryBuilder('categories')
-        .where('categories.id = :id', { id })
-        .getOne();
-    }
+  async getOneCategorieById(id: number) {
+    return await this.categoriesRepository
+      .createQueryBuilder("categories")
+      .leftJoinAndSelect("categories.transactions", "transactions")
+      .where("categories.id = :id", { id })
+      .getOne();
+  }
 
-    async createCategorie(categorie: CategoriesCreateDTO) {
-        return await this.categoriesRepository.save(categorie);
-    }
+  async createCategorie(categorie: CategoriesCreateDTO) {
+    return await this.categoriesRepository.save(categorie);
+  }
 
-    async updateCategorie(id: number, categorie: CategoriesUpdateDTO) {
-        const categories = await this.categoriesRepository.findOneBy({ id });
+  async updateCategorie(id: number, categorie: CategoriesUpdateDTO) {
+    const categories = await this.categoriesRepository.findOneBy({ id });
 
-        const categoriesUpdate = { ...categories, ...categorie };
-        await this.categoriesRepository.save(categoriesUpdate);
+    const categoriesUpdate = { ...categories, ...categorie };
+    await this.categoriesRepository.save(categoriesUpdate);
 
-        return categoriesUpdate;
-    }
+    return categoriesUpdate;
+  }
 
-    async deleteCategorie(id: number) {
-        return await this.categoriesRepository.delete(id);
-    }
-
+  async deleteCategorie(id: number) {
+    return await this.categoriesRepository.delete(id);
+  }
 }
