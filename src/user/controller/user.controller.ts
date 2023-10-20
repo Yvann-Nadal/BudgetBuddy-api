@@ -25,11 +25,18 @@ import { Public } from 'src/auth/decorator/public.decorator';
         return this.usersService.getAllUsers();
     }
 
-    @Public()
     @Get(':id')
     getOneUserById(@Param('id', ParseIntPipe) id: number) {
       return this.usersService.getOneUserById(id);
     }
+
+    @Public()
+    @Get(':username')
+    findOneByUsername(@Param('username') username: string) {
+      return this.usersService.findOneByUsername(username);
+    }
+
+
 
     @Public()
     @Post()

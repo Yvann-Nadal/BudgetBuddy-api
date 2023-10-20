@@ -16,7 +16,7 @@ export class UsersService {
     return await this.userRepository.find({relations: ["accounts"]});
   }
 
-  async findOne(username: string) {
+  async findOneByUsername(username: UsersEntity['username']) {
     return await this.userRepository.findOneBy({ username });
   }
 
