@@ -44,7 +44,6 @@ export class TransactionsService {
     const response: AxiosResponse = await this.httpService.get(apiUrl).toPromise();
     const converter = response.data.rates;
 
-    // Comparer la clé JSON avec transaction.currency_id.currencyType
     if (converter[transaction.currency_id.currencyType]) {
      
       const currencyRate = converter[transaction.currency_id.currencyType];

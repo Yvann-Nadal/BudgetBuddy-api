@@ -11,7 +11,7 @@ export class AccountEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column('numeric', { scale: 2 })
   balance: number;
 
   @ManyToOne(() => UsersEntity, user => user.accounts, {

@@ -23,6 +23,7 @@ export class AccountsController {
         return this.accountsService.createAccount(account);
     }
 
+    @Public()
     @Put(':id')
     updateAccount(@Param('id') id: number, @Body() account: AccountsUpdateDTO) {
         return this.accountsService.updateAccount(id, account);
