@@ -1,1 +1,1 @@
-# BudgetBuddy-api
+# BudgetBuddy API
